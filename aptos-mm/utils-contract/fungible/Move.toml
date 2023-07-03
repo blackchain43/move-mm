@@ -1,0 +1,29 @@
+[package]
+name = "Fungible"
+version = "0.0.0"
+
+[addresses]
+std = "0x1"
+aptos_std = "0x1"
+aptos_framework = "0x1"
+fungible = "0x5d24d1818b686ece0f8421e9da482ec9384b7937109d139d21f7e9d0864d5201"
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-framework"
+
+[dependencies.AptosStdlib]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-stdlib"
+
+[dependencies.MoveStdlib]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/move-stdlib"
+
+# [dependencies]
+# AptosFramework = { local = "../../aptos-core/aptos-move/framework/aptos-framework" }
+# AptosStdlib = { local = "../../aptos-core/aptos-move/framework/aptos-stdlib" }
+# MoveStdlib = { local = "../../aptos-core/aptos-move/framework/move-stdlib" }
