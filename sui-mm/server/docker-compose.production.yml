@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+    p3p3:
+        restart: always
+        image: pepe:${TAG}
+        env_file:
+          - .env.production
+        networks:
+          - production
+networks:
+  production:
+    name: production
+    external: true

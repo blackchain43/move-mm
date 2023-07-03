@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+    pepe-aptos:
+        restart: always
+        image: pepe-aptos:${TAG}
+        ports:
+            - 6004:6003
+        env_file:
+          - .env.local

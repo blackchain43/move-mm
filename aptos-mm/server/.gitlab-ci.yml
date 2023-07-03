@@ -1,0 +1,54 @@
+stages:
+  - build
+  - deploy
+  - cleanup
+variables:
+  CONTAINER_IMAGE: pepe-aptos:${CI_COMMIT_SHORT_SHA}
+
+build:
+  stage: build
+  script:
+    - sudo docker buildx build --platform linux/amd64 --rm -t ${CONTAINER_IMAGE} .
+  only:
+    - aptos
+  tags:
+    - pepe
+
+deploy:
+  stage: deploy
+  needs: [build]
+  script:
+    - cat "$ENV_LOCAL_APTOS" > .env.local
+    - sudo docker compose -f docker-compose.aptos.yml down
+    - sudo TAG=${CI_COMMIT_SHORT_SHA} docker compose -f docker-compose.aptos.yml up -d
+  after_script:
+    - rm -rf ./*
+  only:
+    - aptos
+  tags:
+    - pepe
+
+build_public:
+  stage: build
+  needs: [build]
+  when: manual
+  script:
+    - sudo docker buildx build --platform linux/amd64 --rm -t ${CONTAINER_IMAGE} .
+  only:
+    - aptos
+  tags:
+    - public-p3p3
+
+deploy_public:
+  stage: deploy
+  needs: [build_public]
+  script:
+    - cat "$ENV_PRODUCTION_APTOS" > .env.production
+    - sudo docker compose -f docker-compose.aptos-production.yml down
+    - sudo TAG=${CI_COMMIT_SHORT_SHA} docker compose -f docker-compose.aptos-production.yml up -d
+  after_script:
+    - rm -rf ./*
+  only:
+    - aptos
+  tags:
+    - public-p3p3

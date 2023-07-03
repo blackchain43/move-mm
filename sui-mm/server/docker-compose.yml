@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+    p3p3:
+        restart: always
+        image: pepe:${TAG}
+        ports:
+            - 6003:6003
+        env_file:
+          - .env.local
